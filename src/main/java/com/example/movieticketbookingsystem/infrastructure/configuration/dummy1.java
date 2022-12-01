@@ -1,4 +1,4 @@
 package com.example.movieticketbookingsystem.infrastructure.configuration;
 
-public class dummyClass {
+public class dummy1 {
 }
