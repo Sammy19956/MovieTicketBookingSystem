@@ -1,5 +1,6 @@
 package com.example.movieticketbookingsystem.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -16,5 +17,7 @@ public class User {
     private String email;
     private String phoneNumber;
     private String password;
+
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm")
     private LocalDateTime createdAt;
 }
