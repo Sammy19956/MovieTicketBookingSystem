@@ -1,10 +1,12 @@
 package com.example.movieticketbookingsystem.infrastructure.controllers;
 
+import com.example.movieticketbookingsystem.domain.entities.Enums.UserRole;
 import com.example.movieticketbookingsystem.domain.entities.User;
 import com.example.movieticketbookingsystem.usercase.payload.request.RegistrationDTO;
 import com.example.movieticketbookingsystem.usercase.payload.response.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -23,17 +25,12 @@ public class UserController {
                 .password(registrationDTO.getPassword())
                 .createdAt(LocalDateTime.now())
                 .build();
-//        ApiResponse<User> apiResponse = new ApiResponse<>("Registration Successful!!!", true, user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("show-users")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<User> getUserById(){
-        return new ResponseEntity<>(new User(1L, "Ogberawhe", "1234", "sam@gmail.com","08071387980","paslid9734", LocalDateTime.now()), HttpStatus.OK);
+        return null;
     }
-
-//    @GetMapping("home")
-//    public String showHomePage(){
-//        return "index";
-//    }
 }

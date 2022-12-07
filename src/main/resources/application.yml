@@ -1,0 +1,15 @@
+server:
+  port: 8081
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+    generate-ddl: true
+  sql:
+    init:
+      platform: postgres
+  datasource:
+    url: jdbc:postgresql://localhost:5432/MTBSystem
+    username: postgres
+    password: 12345678
