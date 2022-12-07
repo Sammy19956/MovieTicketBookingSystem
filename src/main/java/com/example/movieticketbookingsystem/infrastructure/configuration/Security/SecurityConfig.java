@@ -1,7 +1,9 @@
 package com.example.movieticketbookingsystem.infrastructure.configuration.Security;
 
+import com.example.movieticketbookingsystem.domain.entities.Enums.UserRole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -21,24 +23,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .anyRequest()
-                .authenticated()
+                .antMatchers(HttpMethod.POST,"/api/**").hasAuthority("ROLE_USER")
                 .and()
-                .httpBasic();
-    }
-    @Bean
-    @Override
-    public UserDetailsService userDetailsServiceBean() throws Exception {
-        UserDetails user = User.builder()
-                .username("username")
-                .password(passwordEncoder().encode("1234"))
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user);
+                .formLogin();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    @Override
+    public UserDetailsService userDetailsService(){
+      UserDetails user = User.builder()
+              .username("username")
+              .password(PasswordConfiguration.passwordEncoder().encode("password"))
+              .authorities(UserRole.USER.getGrantedAuthority())
+              .roles("USER")
+              .build();
+      return new InMemoryUserDetailsManager(user);
     }
 }
