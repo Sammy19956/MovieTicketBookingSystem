@@ -17,13 +17,11 @@ public class UserController {
     @PostMapping("register")
     public ResponseEntity<User> register(@RequestBody RegistrationDTO registrationDTO){
         User user = User.builder()
-                .id(1L)
                 .firstName(registrationDTO.getFirstName())
                 .lastName(registrationDTO.getLastName())
                 .phoneNumber(registrationDTO.getPhoneNumber())
                 .email(registrationDTO.getEmail())
                 .password(registrationDTO.getPassword())
-                .createdAt(LocalDateTime.now())
                 .build();
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

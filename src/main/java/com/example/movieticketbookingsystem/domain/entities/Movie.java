@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,10 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-public class Movie {
-
-    @Id
-    private Long id;
+public class Movie extends AbstractEntity{
 
     @Column(nullable = false)
     private String title;
@@ -26,15 +24,15 @@ public class Movie {
     @Column(nullable = false)
     private String description;
     private String director;
-    private String boxOffice;
 
     @Enumerated(value = EnumType.STRING)
     private Genre genre;
+    private String duration;
+    private String releaseDate;
+    private String rating;
+    private String trailerUrl;
+    private String imageUrl;
 
-    @JsonFormat(pattern = "yyyy/MM/dd HH:mm")
-    private LocalDateTime releaseDate;
-
-    @JsonFormat(pattern = "yyyy/MM/dd HH:mm")
-    private LocalDateTime uploadedAt;
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    private User user;
 }

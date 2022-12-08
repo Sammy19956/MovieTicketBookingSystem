@@ -13,3 +13,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/MTBSystem
     username: postgres
     password: 12345678
+management:
+  server:
+    port: 8090

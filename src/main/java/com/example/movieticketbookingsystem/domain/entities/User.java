@@ -1,31 +1,37 @@
 package com.example.movieticketbookingsystem.domain.entities;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.example.movieticketbookingsystem.domain.entities.Enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
+@DiscriminatorValue("admin")
 @Entity
 @Table(name="users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+public class User extends AbstractEntity{
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
     private String password;
     private String address;
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
 
-    @JsonFormat(pattern = "yyyy/MM/dd HH:mm")
-    private LocalDateTime createdAt;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Wallet wallet;
 
-    @JsonFormat(pattern = "yyyy/MM/dd HH:mm")
-    private LocalDateTime updatedAt;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user")
+    private List<Notification> notificationList;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user")
+    private List<Movie> movieList;
 }
